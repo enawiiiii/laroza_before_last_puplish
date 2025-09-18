@@ -1,0 +1,48 @@
+You are a coding assistant helping me connect my web app to two different Firebase projects (one for the online store and one for the physical boutique).  
+
+Here is what I need you to do:
+
+1. Setup Firebase Admin SDK for **two separate service accounts**:
+   - Online project: (service account JSON attached)
+   - Store project: (service account JSON attached)
+
+2. Create two different Firebase app instances using `initializeApp` with different names (e.g., `onlineApp`, `storeApp`).
+
+3. For each app, initialize Firestore and export them as:
+   - `dbOnline`
+   - `dbStore`
+
+4. On the **first run**, check if the collections exist (`products`, `sales`, `returns`, `accounting`).  
+   - If not found, automatically create them with an empty document (or a default structure).  
+   - Collections:
+     - `products` → store product info (name, SKU, stock, price)
+     - `sales` → sales transactions
+     - `returns` → returned items
+     - `accounting` → revenue, expenses, profit tracking
+
+5. Make sure both databases are **fully independent**, so operations on `dbOnline` do not affect `dbStore`.
+
+6. Provide example functions in a separate `services/firestore.js` file:
+   - `addProduct(db, data)`
+   - `recordSale(db, saleData)`
+   - `recordReturn(db, returnData)`
+   - `addAccountingEntry(db, entry)`
+
+7. Organize the project in a clean modular structure:
+   - `src/` → source code
+   - `src/config/firebase.js` → Firebase initialization
+   - `src/services/firestore.js` → Firestore helper functions
+   - `src/routes/*.js` → example Express routes for products, sales, returns, and accounting
+   - `index.js` → main server entry point
+
+8. Include a `package.json` with all necessary dependencies (`firebase-admin`, `express`, `cors`, etc.).
+
+9. Prepare an `.env` file so sensitive credentials (Firebase service account JSON) are not hardcoded.  
+   - Example: `FIREBASE_ONLINE_KEY` and `FIREBASE_STORE_KEY` as base64-encoded JSON strings.
+
+10. Ensure the project is ready to be deployed to a cloud hosting environment with minimal extra steps.  
+   - That means it should start with `npm start`  
+   - Handle `PORT` from environment variables  
+   - Provide a health check route (e.g., `/health`) to confirm the server is running.
+
+The code should be **production-ready, modular, and clean**, making it easy to expand in the future.
